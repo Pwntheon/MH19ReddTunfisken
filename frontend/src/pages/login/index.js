@@ -1,18 +1,22 @@
 import React, { Component } from 'react';
 import FacebookLogin from 'react-facebook-login';
 import Jumbotron from 'react-bootstrap/Jumbotron';
-import Router from 'next/router';
-import { connect } from 'react-redux';
-import { login } from '../../store';
-import css from '../../styles.less';
-
+import { Redirect } from 'react-router-dom';
 class Login extends Component {
+  state = {
+    redirectToHome: false
+  };
+
   render() {
     const authCallback = response => {
-      const { dispatch } = this.props;
-      dispatch(login(response));
-      Router.push('/index');
+      this.props.onLogin(response);
+      this.setState({ redirectToHome: true });
     };
+    const { redirectToHome } = this.state;
+
+    if (redirectToHome) {
+      return <Redirect to="/" />;
+    }
 
     return (
       <Jumbotron>
@@ -29,4 +33,4 @@ class Login extends Component {
   }
 }
 
-export default connect()(Login);
+export default Login;
