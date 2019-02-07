@@ -1,0 +1,8 @@
+.mini-stats {
+    display:flex;
+    justify-content: stretch;
+}
+
+.mini-stats > * {
+    flex-grow: 1;
+}

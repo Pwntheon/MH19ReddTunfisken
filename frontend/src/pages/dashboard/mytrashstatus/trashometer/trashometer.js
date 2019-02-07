@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Bargraph from '../../../components/bargraph';
+import Bargraph from '../../../../components/bargraph';
 
 import './trashometer.css';
 class Trashometer extends Component {
@@ -26,6 +26,7 @@ class Trashometer extends Component {
                     primaryColor={"lightgreen"}
                     secondaryHeight={secondary}
                     secondaryColor={color} />
+                <div className="baseline" />
             </div>
         );
     }

@@ -1,7 +1,0 @@
-.trashometer {
-    width: 100%;
-    border: 3px dashed gray;
-    display: flex;
-    justify-content: space-evenly;
-    padding: 0 10%;
-}
