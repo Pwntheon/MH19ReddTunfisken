@@ -1,0 +1,24 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@zeit/next-less": "^1.0.1",
+    "bootstrap": "^4.2.1",
+    "less": "^3.9.0",
+    "next": "^7.0.2",
+    "react": "^16.8.1",
+    "react-bootstrap": "^1.0.0-beta.5",
+    "react-dom": "^16.8.1"
+  }
+}
