@@ -9,7 +9,6 @@ import css from '../../styles.less';
 class Login extends Component {
   render() {
     const authCallback = response => {
-      console.log(response);
       const { dispatch } = this.props;
       dispatch(login(response));
       Router.push('/index');
