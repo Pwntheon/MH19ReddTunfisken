@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 
 class Kids extends Component {
   render() {
-    return 'Kids';
+    return(
+      <div>
+        Kids
+      </div>
+    );
   }
 }
 export default Kids;
