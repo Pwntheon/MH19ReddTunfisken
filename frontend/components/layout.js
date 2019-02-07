@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import Link from 'next/link';
-
+import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
 export default ({ children, title = 'This is the default title' }) => (
   <div>
     <Head>
@@ -16,11 +17,21 @@ export default ({ children, title = 'This is the default title' }) => (
       />
     </Head>
     <header>
-      <nav>
-        <Link href="/">
-          <a>Home</a>
-        </Link>{' '}
-      </nav>
+      <Navbar bg="light" expand="lg">
+        <Navbar.Brand>
+          <Link href="/index">
+            <a>CutIt</a>
+          </Link>{' '}
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="mr-auto">
+            <Link href="/index">
+              <a>Hjem</a>
+            </Link>{' '}
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
     </header>
 
     {children}
@@ -28,11 +39,3 @@ export default ({ children, title = 'This is the default title' }) => (
     <footer>{'I`m here to stay'}</footer>
   </div>
 );
-
-// export default () => {
-//   <Head>
-//     <title>Redd tunfisken</title>
-//     <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-
-//   </Head>;
-// };
