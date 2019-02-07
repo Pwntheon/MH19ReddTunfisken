@@ -35,6 +35,21 @@ export default ({ children, title = 'This is the default title' }) => (
             <Link href="/index">
               <a>Hjem</a>
             </Link>{' '}
+            <Link href="/dashboard">
+              <a>Dashboard</a>
+            </Link>{' '}
+            <Link href="/kids">
+              <a>For barn</a>
+            </Link>{' '}
+            <Link href="/reduce">
+              <a>Reduser</a>
+            </Link>{' '}
+            <Link href="/reuse">
+              <a>Gjenbruk</a>
+            </Link>{' '}
+            <Link href="/stats">
+              <a>Statistikk</a>
+            </Link>{' '}
           </Nav>
         </Navbar.Collapse>
       </Navbar>
