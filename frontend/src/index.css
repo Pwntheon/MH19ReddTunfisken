@@ -12,3 +12,47 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.color-primary {
+  color: #94c11f;
+} 
+.color-primary-dark {
+  color: #749719;
+} 
+
+.color-secondary {
+  color: #749719;
+} 
+.color-secondary-dark {
+  color: #1d484a;
+} 
+
+.color-alt1 {
+  color: #f29100;
+} 
+.color-alt1-dark {
+  color: #b46f00;
+} 
+
+.color-alt2 {
+  color: #951c81;
+} 
+.color-alt2-dark {
+  color: #640c53;
+} 
+
+.color-bg1 {
+  background-color: #f5f8f9;
+} 
+.color-bg2 {
+  background-color: #edf1f2;
+} 
+.color-bg3 {
+  background-color: #dae3e6;
+} 
+.color-bg4 {
+  background-color: #c9d5d7;
+} 
+.color-bg5 {
+  background-color: #b5c9cb;
+} 
