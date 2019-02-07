@@ -1,6 +1,7 @@
 frontend/.DS_STORE
 frontend/node_modules
 frontend/.next
+frontend/out
 frontend/scripts/flow/*/.flowconfig
 frontend/*~
 frontend/*.pyc
