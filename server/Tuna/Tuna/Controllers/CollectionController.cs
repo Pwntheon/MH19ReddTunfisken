@@ -29,7 +29,7 @@ namespace Tuna.Controllers
         [Route("/api/collection/register/me")]
         public async Task<ActionResult<WasteCollection>> RegisterCollectionForSelf([FromBody] WasteCollection collection)
         {
-            collection.HouseholdId = Context.Households.Where(x => x.OwnerId == HttpContext.User.GetClaim("sub").Value).FirstOrDefault().HouseholdId;
+            collection.HouseholdId = HttpContext.User.GetHouseHoldId(Context);
             return await RegisterCollectionAsync(collection);
         }
 
@@ -53,19 +53,20 @@ namespace Tuna.Controllers
             return Ok(collection);
         }
 
+        // User gets points for having less trash collected than the average in the users district
         private void RegisterPointsForCollection(WasteCollection collection)
         {
             var household = Context.Households.Where(x => x.HouseholdId == collection.HouseholdId).FirstOrDefault();
 
-            var avg = MockedAverageDistributionByDistrict.GetMockedDistribution(household.District);
-            var totalAverageBags = avg.PlasticWaste + avg.ResidualWaste + avg.FoodWaste;
+            var districtAverage = MockedAverageDistributionByDistrict.GetMockedDistribution(household.District);
+            var districtAverageTotalBags = districtAverage.PlasticWaste + districtAverage.ResidualWaste + districtAverage.FoodWaste;
 
             var totalBagsCollected = collection.PlasticWaste + collection.ResidualWaste + collection.FoodWaste;
 
-            var multiplier = totalAverageBags / totalBagsCollected - 1;
-            var pointsGiven = 100 * multiplier;
+            var pointsMultiplier = districtAverageTotalBags / totalBagsCollected - 1;
+            var pointsGiven = 100 * pointsMultiplier;
 
-            household.Points += 100;
+            household.Points += (int)pointsGiven;
         }
     }
 }

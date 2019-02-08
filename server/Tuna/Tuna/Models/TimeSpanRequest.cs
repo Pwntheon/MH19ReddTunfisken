@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Tuna.Controllers
+namespace Tuna.Models
 {
     public class TimeSpanRequest
     {
