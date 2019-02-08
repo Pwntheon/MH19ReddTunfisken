@@ -51,8 +51,10 @@ namespace Tuna.AuthMiddleware
             {
                 user = InMemoryUserCache.GetValueOrDefault(referenceToken);
             }
-
-            user = await FacebookGraphService.CheckToken(referenceToken);
+            else
+            {
+                user = await FacebookGraphService.CheckToken(referenceToken);
+            }
             if (user == null)
                 return AuthenticateResult.NoResult();
 

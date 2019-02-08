@@ -40,9 +40,9 @@ namespace Tuna.Controllers
         /// </summary>
         /// <param name="district"></param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpPost]
         [Route("/api/statistics/{district}/")]
-        public ActionResult<TrashDistribution> GetStatisticsForDistrict(District district)
+        public ActionResult<TrashDistribution> GetStatisticsForDistrict([FromBody] TimeSpanRequest timespan, District district)
         {
             return Ok(MockedAverageDistributionByDistrict.GetMockedDistribution(district));
         }

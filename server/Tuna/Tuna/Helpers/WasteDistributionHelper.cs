@@ -11,11 +11,15 @@ namespace Tuna.Helpers
         public static TrashDistribution GetAverageDistributionFromWasteCollections(IEnumerable<WasteCollection> collections)
         {
             var numberOfCollections = collections.Count();
+            var sumFoodWaste = collections.Sum(x => x.FoodWaste);
+            var sumPlasticWaste = collections.Sum(x => x.PlasticWaste);
+            var sumResidualWaste = collections.Sum(x => x.ResidualWaste);
+
             return new TrashDistribution
             {
-                FoodWaste = collections.Sum(x => x.FoodWaste) / numberOfCollections,
-                PlasticWaste = collections.Sum(x => x.PlasticWaste) / numberOfCollections,
-                ResidualWaste = collections.Sum(x => x.ResidualWaste) / numberOfCollections
+                FoodWaste = sumFoodWaste == 0 || numberOfCollections == 0 ? 0 : sumFoodWaste / numberOfCollections,
+                PlasticWaste = sumPlasticWaste == 0 || numberOfCollections == 0 ? 0 : sumPlasticWaste / numberOfCollections,
+                ResidualWaste = sumResidualWaste == 0 || numberOfCollections == 0 ? 0 : sumResidualWaste / numberOfCollections
             };
         }
     }

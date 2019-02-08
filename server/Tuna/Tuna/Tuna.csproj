@@ -4,14 +4,21 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
     <UserSecretsId>0c34e3d1-e15c-431f-a444-815b7f06a08d</UserSecretsId>
+    <ApplicationInsightsResourceId>/subscriptions/41f15808-c9c1-43ce-8b27-1850475527d0/resourcegroups/Default-ApplicationInsights-EastUS/providers/microsoft.insights/components/Tuna</ApplicationInsightsResourceId>
+    <ApplicationInsightsAnnotationResourceId>/subscriptions/41f15808-c9c1-43ce-8b27-1850475527d0/resourcegroups/Default-ApplicationInsights-EastUS/providers/microsoft.insights/components/Tuna</ApplicationInsightsAnnotationResourceId>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.5.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.1" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services" />
   </ItemGroup>
 
 </Project>
