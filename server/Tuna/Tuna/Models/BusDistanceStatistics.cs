@@ -8,6 +8,16 @@ namespace Tuna.Models
     public class BusDistanceStatistics
     {
         public static readonly int MetersDrivenPerFoodWasteBag = 250;
+        private static readonly SortedDictionary<int, string> DistanceMilestones = new SortedDictionary<int, string> {
+                { 250, "Det er ikke særlig langt" },
+                { 300, "Det tilsvarer litt over en halv runde inne på Bislett stadion" },
+                { 500, "Det er ca like langt som fra Jernbanetorget til Stortinget" },
+                { 1000, "Det er ca like langt som fra Rådhuset til badeplassen Tjuvholmen" },
+                { 1500, "Det er ca like langt som fra Grünerløkka til Tøyen" },
+                { 2500, "Det er ca like langt som fra Grønland til Sofienbergparken" },
+                { 3500, "Det er lengre enn fra Oslo s til Majorstuen" }
+            };
+
         public int DistanceInMeters { get; set; }
 
         // Human friendly display value for distance. Either in meters or kilometers
@@ -23,39 +33,17 @@ namespace Tuna.Models
         // A string that helps the user understand how far the distance is, by giving an example
         public string GeographicDistanceDescription
         {
-            get { return GenerateGeographicDistanceDescription(DistanceInMeters); }
+            get { return GetDistanceMilestone(DistanceInMeters); }
         }
 
-        private string GenerateGeographicDistanceDescription(int meters)
+        private string GetDistanceMilestone(int meters)
         {
-            if (meters < 250)
+            foreach (var milestone in DistanceMilestones.ToList())
             {
-                return "Det er ikke særlig langt";
+                if (meters < milestone.Key)
+                    return milestone.Value;
             }
-            else if (meters < 300)
-            {
-                return "Det tilsvarer litt over en halv runde inne på Bislett stadion";
-            }
-            else if (meters < 500)
-            {
-                return "Det er ca like langt som fra Jernbanetorget til Stortinget";
-            }
-            else if (meters < 1000)
-            {
-                return "Det er ca like langt som fra Rådhuset til badeplassen Tjuvholmen";
-            }
-            else if (meters < 1500)
-            {
-                return "Det er ca like langt som fra Grünerløkka til Tøyen";
-            }
-            else if (meters < 2500)
-            {
-                return "Det er ca like langt som fra Grønland til Sofienbergparken";
-            }
-            else
-            {
-                return "Det er lengre enn fra Oslo s til Majorstuen";
-            }
+            return "Det er veldig langt";
         }
     }
 }
