@@ -1,6 +1,6 @@
 const API_URL =
-  'https://southcentralus.api.cognitive.microsoft.com/customvision/v2.0/Prediction/5c51155e-a050-4b72-94ea-bc8abf8cb5bc/image?iterationId=004571f6-28f5-415e-b200-25ca6692b7c9';
-const PREDICTION_KEY = '81227541151d4d74ab3a2265792d14dd';
+  'https://westeurope.api.cognitive.microsoft.com/customvision/v2.0/Prediction/b394e0b1-e386-444f-ba67-20cb9ea32df6/image';
+const PREDICTION_KEY = '062025dc84c74957a38a447b2c3660e6';
 class Api {
   async postImage(base64Image) {
     if (!base64Image) return;

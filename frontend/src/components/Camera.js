@@ -57,6 +57,9 @@ class Camera extends Component {
     if (!capturedImage) return;
     console.log(capturedImage);
 
+    this.setState({
+      uploading: true
+    });
     const response = await Api.postImage(capturedImage);
     if (response.status !== 200) {
       console.error('Something went wrong');
@@ -64,39 +67,45 @@ class Camera extends Component {
     }
 
     const data = await response.json();
+    this.setState({
+      uploading: false
+    });
 
     this.props.onPredictResult(data);
     console.log(data);
   };
 
   render() {
-    const imageDisplay = this.state.capturedImage ? (
-      <img src={this.state.capturedImage} alt="captured" width="350" />
-    ) : (
-      <span />
-    );
+    let imageDisplay = '';
+    const fullWidth = window.innerWidth;
+    if (this.state.capturedImage) {
+      const imageUrl = URL.createObjectURL(this.state.capturedImage);
+      imageDisplay = <img src={imageUrl} alt="captured" width="350" />;
+    } else {
+      imageDisplay = <span />;
+    }
 
     const buttons = this.state.captured ? (
       <div>
         <button className="deleteButton" onClick={this.discardImage}>
           {' '}
-          Delete Photo{' '}
+          Slett bilde{' '}
         </button>
         <button className="captureButton" onClick={this.uploadImage}>
           {' '}
-          Upload Photo{' '}
+          Last opp bilde{' '}
         </button>
       </div>
     ) : (
       <button className="captureButton" onClick={this.captureImage}>
         {' '}
-        Take Picture{' '}
+        Ta bilde{' '}
       </button>
     );
 
     const uploading = this.state.uploading ? (
       <div>
-        <p> Uploading Image, please wait ... </p>
+        <p> Laster opp bilde. Vennligst vent </p>
       </div>
     ) : (
       <span />
@@ -111,7 +120,7 @@ class Camera extends Component {
           muted
           id="webcam"
           width="100%"
-          height="200"
+          height={fullWidth}
         />
         <br />
         <div className="imageCanvas">{imageDisplay}</div>

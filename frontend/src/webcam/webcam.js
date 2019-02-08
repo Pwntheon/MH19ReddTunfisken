@@ -19,7 +19,7 @@ export class Webcam {
         navigator.mediaDevices
           .getUserMedia({
             audio: false,
-            video: { facingMode: 'user' }
+            video: { facingMode: 'environment' }
           })
           .then(mediaStream => {
             if ('srcObject' in this.webcamElement) {

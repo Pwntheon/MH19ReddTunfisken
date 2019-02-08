@@ -1,11 +1,29 @@
 import React, { Component } from 'react';
 
-const Prediction = props => (
-  <li key={props.prediction.tagId}>
-    Dette er en {props.prediction.tagName}. Vi er{' '}
-    {Math.round(props.prediction.probability * 100)}% sikre på dette.
-  </li>
-);
+const tagDescriptions = {
+  papp: 'Papp skal i papirsøppelet',
+  plast: 'Plast skal i plastsøppelet - Blå pose',
+  metall: 'Metall skal i glass/metallsøppelet',
+  restavfall: 'Restavfall skal i restavfallet',
+  pant: 'Pant alt, alltid',
+  tekstiler: 'Tekstiler skal leveres til klesbutikker/miljøstasjon',
+  matavfall: 'Matavfall skal i grønne poser',
+  glass: 'Glass skal i glass/metallsøppelet'
+};
+
+const Prediction = props => {
+  const probability = Math.round(props.prediction.probability * 100);
+
+  if (probability < 30) return '';
+
+  const desc = tagDescriptions[props.prediction.tagName];
+  return (
+    <li key={props.prediction.tagId}>
+      Dette er en {props.prediction.tagName}. {desc}. Vi er{' '}
+      {Math.round(props.prediction.probability * 100)}% på denne antagelsen.
+    </li>
+  );
+};
 
 class Predictions extends Component {
   render() {
