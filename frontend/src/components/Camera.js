@@ -136,24 +136,32 @@ class Camera extends Component {
     );
 
     const video = this.state.captured ? (
-      <video
-        className="hidden"
-        autoPlay={false}
-        playsInline={false}
-        muted
-        id="webcam"
-        width="100%"
-        height={fullWidth}
-      />
+      <Row>
+        <Col sm={12}>
+          <video
+            className="hidden"
+            autoPlay={false}
+            playsInline={false}
+            muted
+            id="webcam"
+            width="100%"
+            height={fullWidth}
+          />
+        </Col>
+      </Row>
     ) : (
-      <video
-        autoPlay
-        playsInline
-        muted
-        id="webcam"
-        width="100%"
-        height={fullWidth}
-      />
+      <Row>
+        <Col sm={12}>
+          <video
+            autoPlay
+            playsInline
+            muted
+            id="webcam"
+            width="100%"
+            height={fullWidth}
+          />
+        </Col>
+      </Row>
     );
 
     return (
@@ -165,7 +173,6 @@ class Camera extends Component {
         {uploading}
         {video}
         {imageDisplay}
-
         {buttons}
       </div>
     );
