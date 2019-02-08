@@ -41,9 +41,9 @@ class Header extends Component {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
-              <Link to="/">Home</Link>
-              <Link to="/dashboard">Dashboard</Link>
-              <Link to="/kids">Kids</Link>
+              <Link to="/">Hjem</Link>
+              <Link to="/dashboard">Dashbord</Link>
+              <Link to="/kids">For Barn</Link>
             </Nav>
           </Navbar.Collapse>
         </Navbar>
