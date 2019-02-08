@@ -5,21 +5,58 @@ import CO2Saved from './co2saved/co2saved';
 import FlinkeBarn from './flinkebarn/flinkebarn';
 
 import './mytrashstatus.css';
+import api from '../../../api/api';
 
 class MyTrashStatus extends Component {
     constructor(props) {
-      super(props);
-      this.state = {
-        temp: 80
-      };
+        super(props);
+        this.state = {
+            myStatistics: {
+                "foodWaste": 0,
+                "plasticWaste": 0,
+                "residualWaste": 0
+            },
+            districtStatistics: {
+                "foodWaste": 0,
+                "plasticWaste": 0,
+                "residualWaste": 0
+            }
+        };
+
+        this.getMyPercent = this.getMyPercent.bind(this);
+        this.updateStats = this.updateStats.bind(this);
+    }
+
+    updateStats() {
+        api.getMyStatistics(this.props.household, this.props.authentication.accessToken)
+            .then(r => r.json())
+            .then(d => this.setState({ myStatistics: d }));
+        api.getDistrictStatistics(this.props.household, this.props.authentication.accessToken)
+            .then(r => r.json())
+            .then(d => this.setState({ districtStatistics: d }));
+    }
+
+    componentDidMount() {
+        this.refreshTimer = setInterval(this.updateStats, 10000);
+        this.updateStats();
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.refreshTimer);
+    }
+
+    getMyPercent() {
+        const {myStatistics, districtStatistics} = this.state;
+        const myTotal = myStatistics.foodWaste + myStatistics.plasticWaste + myStatistics.residualWaste;
+        const districtTotal =  districtStatistics.foodWaste + districtStatistics.plasticWaste + districtStatistics.residualWaste;
+        return myTotal / districtTotal * 100;
     }
     render() {
         return (
             <div className="my-trash-status">
-                <Trashometer temp={this.state.temp} />
-                <input type="range" min="50" max="150" value={this.state.temp} onChange={e => this.setState({ temp: e.target.value })} />
+                <Trashometer temp={this.getMyPercent()} />
                 <div className="mini-stats">
-                    <Pie residualWaste={60} plasticWaste={15} foodWaste={25}></Pie>
+                    <Pie {...this.state.myStatistics}></Pie>
                     <CO2Saved saved={0.22} />
                     <FlinkeBarn />
                 </div>
