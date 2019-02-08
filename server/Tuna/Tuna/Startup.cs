@@ -14,6 +14,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Tuna.AuthMiddleware;
+using Tuna.Models;
+using Tuna.Services;
 
 namespace Tuna
 {
@@ -38,6 +40,7 @@ namespace Tuna
                 c.DescribeAllEnumsAsStrings();
                 c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "TunaDocs.xml"));
             });
+            services.AddSingleton(typeof(WasteCollectionService));
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

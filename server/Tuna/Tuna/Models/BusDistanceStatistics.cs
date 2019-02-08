@@ -7,6 +7,10 @@ namespace Tuna.Models
 {
     public class BusDistanceStatistics
     {
+        public BusDistanceStatistics(int distanceInMeters)
+        {
+            DistanceInMeters = distanceInMeters;
+        }
         public static readonly int MetersDrivenPerFoodWasteBag = 250;
         private static readonly SortedDictionary<int, string> DistanceMilestones = new SortedDictionary<int, string> {
                 { 250, "Det er ikke særlig langt" },
@@ -15,10 +19,11 @@ namespace Tuna.Models
                 { 1000, "Det er ca like langt som fra Rådhuset til badeplassen Tjuvholmen" },
                 { 1500, "Det er ca like langt som fra Grünerløkka til Tøyen" },
                 { 2500, "Det er ca like langt som fra Grønland til Sofienbergparken" },
-                { 3500, "Det er lengre enn fra Oslo s til Majorstuen" }
+                { 3500, "Det er lengre enn fra Oslo s til Majorstuen" },
+                { int.MaxValue, "Det er veldig langt" }
             };
 
-        public int DistanceInMeters { get; set; }
+        public int DistanceInMeters { get; }
 
         // Human friendly display value for distance. Either in meters or kilometers
         public string ReadableDistance
@@ -30,20 +35,10 @@ namespace Tuna.Models
             }
         }
 
-        // A string that helps the user understand how far the distance is, by giving an example
+        // Helps the user understand how far the distance is, by giving an example
         public string GeographicDistanceDescription
         {
-            get { return GetDistanceMilestone(DistanceInMeters); }
-        }
-
-        private string GetDistanceMilestone(int meters)
-        {
-            foreach (var milestone in DistanceMilestones.ToList())
-            {
-                if (meters < milestone.Key)
-                    return milestone.Value;
-            }
-            return "Det er veldig langt";
+            get { return DistanceMilestones.Where(x => x.Key > DistanceInMeters).First().Value; }
         }
     }
 }

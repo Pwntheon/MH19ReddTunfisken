@@ -60,10 +60,7 @@ namespace Tuna.Controllers
         {
             var householdId = HttpContext.User.GetHouseHoldId(Context);
             var numberOfFoodWasteBagsCollected = Context.WasteCollections.Where(x => x.HouseholdId == householdId && x.CollectionDate >= timespan.FromDate).Sum(x => x.FoodWaste);
-            var busStatistics = new BusDistanceStatistics()
-            {
-                DistanceInMeters = numberOfFoodWasteBagsCollected * BusDistanceStatistics.MetersDrivenPerFoodWasteBag
-            };
+            var busStatistics = new BusDistanceStatistics(numberOfFoodWasteBagsCollected * BusDistanceStatistics.MetersDrivenPerFoodWasteBag);
 
             return busStatistics;
         }
