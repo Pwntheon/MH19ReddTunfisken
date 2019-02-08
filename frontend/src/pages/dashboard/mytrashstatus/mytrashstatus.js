@@ -28,6 +28,7 @@ class MyTrashStatus extends Component {
     }
 
     updateStats() {
+        if(typeof this.props.household.district === 'undefined') return;
         api.getMyStatistics(this.props.household, this.props.authentication.accessToken)
             .then(r => r.json())
             .then(d => this.setState({ myStatistics: d }));
@@ -37,7 +38,7 @@ class MyTrashStatus extends Component {
     }
 
     componentDidMount() {
-        this.refreshTimer = setInterval(this.updateStats, 10000);
+        this.refreshTimer = setInterval(this.updateStats, 1000);
         this.updateStats();
     }
 
