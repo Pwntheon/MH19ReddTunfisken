@@ -1,0 +1,20 @@
+.bar-graph-container {
+    width: 40%;
+    height: 400px;
+    display: flex;
+    align-items: flex-end;
+    padding: 0 5%;
+}
+
+.bar-graph-inner {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-direction: column;
+}
+
+.bar-graph-inner > div {
+    width: 100%;
+}
