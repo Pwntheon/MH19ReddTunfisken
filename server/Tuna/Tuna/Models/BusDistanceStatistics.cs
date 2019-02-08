@@ -54,9 +54,8 @@ namespace Tuna.Models
             }
             else
             {
-                return = "Det er lengre enn fra Oslo s til Majorstuen";
+                return "Det er lengre enn fra Oslo s til Majorstuen";
             }
         }
     }
-}
 }

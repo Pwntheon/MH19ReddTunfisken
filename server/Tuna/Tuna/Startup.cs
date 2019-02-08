@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.Facebook;
@@ -35,6 +36,7 @@ namespace Tuna
             {
                 c.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info { Title = "Big tuna API", Version = "v1" });
                 c.DescribeAllEnumsAsStrings();
+                c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "TunaDocs.xml"));
             });
         }
 
