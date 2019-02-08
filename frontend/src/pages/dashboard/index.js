@@ -22,7 +22,7 @@ class Dashboard extends Component {
 
     return (
       <div>
-        <MyTrashStatus />
+        <MyTrashStatus authentication={authentication} household={household} />
         <BottomMenu />
       </div>
     );
