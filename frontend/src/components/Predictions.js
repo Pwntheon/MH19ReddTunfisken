@@ -11,7 +11,9 @@ const tagDescriptions = {
   tekstiler: 'Tekstiler skal leveres til klesbutikker/miljøstasjon',
   matavfall: 'Matavfall skal i grønne poser',
   glass: 'Glass skal i glass/metallsøppelet',
-  venn: 'Venner skal man være snill med'
+  venn: 'Venner skal man være snill med',
+  elektronikk:
+    'Elektronikk skal leveres til nærmeste elektronikk forhandler. Om det fortsatt er brukelig kan du kanskje gi det til en venn eller prøve å selge det?'
 };
 
 const Prediction = props => {
