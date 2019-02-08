@@ -1,0 +1,17 @@
+
+.graphline-container {
+    z-index: -1;
+    position: absolute;
+    width: 100%;
+    top: 50%;
+}
+
+.graphline:first-child, .graphline:last-child {
+    border-top: 1px solid black;
+}
+.graphline {
+    border-top: 1px solid lightgray;
+    width: 100%;
+    text-align: start;
+    padding-bottom: 25px;
+}

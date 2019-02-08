@@ -4,11 +4,34 @@
     justify-content: space-evenly;
     padding: 0 10%;
     position: relative;
+    margin-bottom: 20px;
 }
 
-.baseline {
-    position: absolute;
-    border-top: 1px solid black;
-    width: 100%;
-    top: 50%;
+.legend-color {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+}
+
+
+.trashometer-legend {
+    display: flex;
+    justify-content: stretch;
+    justify-content: space-around;
+}
+
+.legend-description {
+    display: inline-block;
+} 
+
+.trashometer-legend > div {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    font-size: 50%;
+    max-width: 25%;
+}
+
+.trashometer-header-container h1 {
+    color: #66952e;
 }

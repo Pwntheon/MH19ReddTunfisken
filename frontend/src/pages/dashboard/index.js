@@ -10,7 +10,7 @@ class Dashboard extends Component {
     if (!authentication.accessToken) {
       return <Redirect to="/login" />;
     }
-
+/*
     if (!household || !household.householdId) {
       return (
         <RegisterHousehold
@@ -19,10 +19,10 @@ class Dashboard extends Component {
         />
       );
     }
-
+*/
     return (
       <div>
-        <MyTrashStatus />
+        <MyTrashStatus authentication={authentication} household={household}/>
         <BottomMenu />
       </div>
     );
