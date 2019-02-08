@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Webcam } from '../webcam/webcam';
 import Api from '../api/cameraApi';
+import Alert from 'react-bootstrap/Alert';
+import './Camera.css';
 class Camera extends Component {
   constructor() {
     super();
@@ -49,6 +51,8 @@ class Camera extends Component {
       captured: false,
       capturedImage: null
     });
+    console.log(this.props);
+    this.props.onRemoveImage();
   };
 
   uploadImage = async () => {
@@ -77,7 +81,7 @@ class Camera extends Component {
 
   render() {
     let imageDisplay = '';
-    const fullWidth = window.innerWidth;
+    const fullWidth = window.innerWidth / 2;
     if (this.state.capturedImage) {
       const imageUrl = URL.createObjectURL(this.state.capturedImage);
       imageDisplay = <img src={imageUrl} alt="captured" width="350" />;
@@ -111,18 +115,35 @@ class Camera extends Component {
       <span />
     );
 
+    const video = this.state.captured ? (
+      <video
+        className="hidden"
+        autoPlay={false}
+        playsInline={false}
+        muted
+        id="webcam"
+        width="100%"
+        height={fullWidth}
+      />
+    ) : (
+      <video
+        autoPlay
+        playsInline
+        muted
+        id="webcam"
+        width="100%"
+        height={fullWidth}
+      />
+    );
+
     return (
       <div>
-        {uploading}
-        <video
-          autoPlay
-          playsInline
-          muted
-          id="webcam"
-          width="100%"
-          height={fullWidth}
-        />
-        <br />
+        <Alert variant="warning">
+          <Alert.Heading>Hei! </Alert.Heading>
+          <p>Bildene du tar blir lastet opp til våre servere.</p>
+        </Alert>
+        ;{uploading}
+        {video}
         <div className="imageCanvas">{imageDisplay}</div>
         {buttons}
       </div>

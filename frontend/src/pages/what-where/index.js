@@ -13,6 +13,12 @@ class WhatWhere extends Component {
     });
   };
 
+  onRemoveImage = data => {
+    this.setState({
+      predictions: []
+    });
+  };
+
   render() {
     const { predictions } = this.state;
     let predictionView = '';
@@ -22,7 +28,10 @@ class WhatWhere extends Component {
     return (
       <div>
         What WhatWhere
-        <Camera onPredictResult={this.onPredictionsRecieved} />
+        <Camera
+          onPredictResult={this.onPredictionsRecieved}
+          onRemoveImage={this.onRemoveImage}
+        />
         {predictionView}
       </div>
     );
