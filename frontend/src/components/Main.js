@@ -4,6 +4,7 @@ import Home from '../pages/home';
 import Login from '../pages/login';
 import Kids from '../pages/kids';
 import Dashboard from '../pages/dashboard';
+import WhatWhere from '../pages/what-where';
 
 class Main extends Component {
   render() {
@@ -38,6 +39,16 @@ class Main extends Component {
             exact
             path="/kids"
             render={props => <Kids authentication={authentication} />}
+          />
+          <Route
+            exact
+            path="/what-where"
+            render={props => (
+              <WhatWhere
+                authentication={authentication}
+                household={household}
+              />
+            )}
           />
         </Switch>
       </main>

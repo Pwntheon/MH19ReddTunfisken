@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import RegisterHousehold from '../../components/RegisterHousehold';
 import MyTrashStatus from './mytrashstatus/mytrashstatus';
+import BottomMenu from '../../components/BottomMenu';
 class Dashboard extends Component {
   render() {
     const { authentication, household, createHousehold } = this.props;
@@ -19,9 +20,12 @@ class Dashboard extends Component {
       );
     }
 
-    console.log(authentication);
-    console.log(household);
-    return <MyTrashStatus />;
+    return (
+      <div>
+        <MyTrashStatus />
+        <BottomMenu />
+      </div>
+    );
   }
 }
 
