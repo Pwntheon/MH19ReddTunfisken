@@ -8,7 +8,7 @@ import Dashboard from '../pages/dashboard';
 class Main extends Component {
   render() {
     const onLogin = this.props.loginCallback;
-    const { authentication } = this.props;
+    const { authentication, household, createHousehold } = this.props;
     return (
       <main>
         <Switch>
@@ -26,7 +26,13 @@ class Main extends Component {
           <Route
             exact
             path="/dashboard"
-            render={props => <Dashboard authentication={authentication} />}
+            render={props => (
+              <Dashboard
+                household={household}
+                authentication={authentication}
+                createHousehold={createHousehold}
+              />
+            )}
           />
           <Route
             exact
