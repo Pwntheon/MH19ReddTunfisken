@@ -25,18 +25,10 @@ namespace Tuna
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            var b = Configuration.GetConnectionString("TunaSchoolConnection");
             services.AddDbContext<TunaContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TunaSchoolConnection")));
-
-            //services.AddAuthentication().AddFacebook(options =>
-            //{
-            //    options.AppId = Configuration.GetValue<string>("FacebookAppId");
-            //    options.AppSecret = Configuration.GetValue<string>("FacebookAppSecret");
-            //});
             services.AddCors();
             services.AddAuthentication("custom_facebook").AddScheme<CustomFacebookAuthenticationOptions, CustomFacebookAuthenticationHandler>("custom_facebook", "facebook", options => { });
             services.AddSwaggerGen(c =>
@@ -46,12 +38,11 @@ namespace Tuna
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.UseDeveloperExceptionPage();
             if (env.IsDevelopment())
             {
+                app.UseDeveloperExceptionPage();
             }
             else
             {
@@ -59,6 +50,7 @@ namespace Tuna
                 app.UseHsts();
             }
 
+            //TODO: Fix when production version is live
             app.UseCors(policy =>
             {
                 //policy.WithOrigins("*");

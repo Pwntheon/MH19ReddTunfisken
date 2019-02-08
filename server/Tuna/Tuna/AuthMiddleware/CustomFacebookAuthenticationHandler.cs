@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.ApplicationInsights;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
@@ -15,7 +17,7 @@ namespace Tuna.AuthMiddleware
 {
     public class CustomFacebookAuthenticationHandler : AuthenticationHandler<CustomFacebookAuthenticationOptions>
     {
-        private static Dictionary<string, FacebookUser> InMemoryUserCache = new Dictionary<string, FacebookUser>();
+        private static ConcurrentDictionary<string, FacebookUser> InMemoryUserCache = new ConcurrentDictionary<string, FacebookUser>();
 
         public CustomFacebookAuthenticationHandler(
             IOptionsMonitor<CustomFacebookAuthenticationOptions> options,
@@ -39,27 +41,34 @@ namespace Tuna.AuthMiddleware
             }
             if (!"Bearer".Equals(headerValue.Scheme, StringComparison.OrdinalIgnoreCase))
             {
-                //Not Basic authentication header
+                //Not bearer token authentication header
                 return AuthenticateResult.NoResult();
             }
 
             var referenceToken = headerValue.Parameter;
 
-            FacebookUser user;
             // Get cached user if exists
-            if (InMemoryUserCache.ContainsKey(referenceToken))
+            if (!InMemoryUserCache.TryGetValue(referenceToken, out FacebookUser user))
             {
-                user = InMemoryUserCache.GetValueOrDefault(referenceToken);
+                user = await FacebookGraphService.GetUserInfoFromReferenceToken(referenceToken);
+                var didAddUserToCache = InMemoryUserCache.TryAdd(referenceToken, user);
+
+                // Log error if we failed to cache user data
+                if (!didAddUserToCache)
+                {
+                    var client = new TelemetryClient();
+                    var telemetryProperties = new Dictionary<string, string> { { "Token", referenceToken }, { "Name", user.Name } };
+                    InMemoryUserCache.ToList().ForEach(x => telemetryProperties.Add("CACHED: " + x.Value.Name, x.Key));
+                    client.TrackEvent("Cannot add user to dictionary", telemetryProperties);
+                    throw new Exception("Cannot add to dictionary");
+                }
             }
-            else
-            {
-                user = await FacebookGraphService.CheckToken(referenceToken);
-                InMemoryUserCache.Add(referenceToken, user);
-            }
+
+            // NoResult if token didn't result in any user info from graph API
             if (user == null)
                 return AuthenticateResult.NoResult();
 
-            // If user was found, we create a ticket
+            // If user was found, we create a ticket containing user info form graph as claims
             var sub = new Claim("sub", user.UserId);
             var name = new Claim(ClaimTypes.Name, user.Name);
             var identity = new ClaimsIdentity("custom_facebook");

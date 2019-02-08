@@ -30,7 +30,7 @@ namespace Tuna.Controllers
         [Route("/api/statistics/me/")]
         public ActionResult<TrashDistribution> GetStatistics([FromBody] TimeSpanRequest timespan)
         {
-            var householdId = Context.Households.Where(x => x.OwnerId == HttpContext.User.GetClaim("sub").Value).FirstOrDefault().HouseholdId;
+            var householdId = HttpContext.User.GetHouseHoldId(Context);
             var collections = Context.WasteCollections.Where(x => x.HouseholdId == householdId && x.CollectionDate >= timespan.FromDate);
             return Ok(WasteDistributionHelper.GetAverageDistributionFromWasteCollections(collections));
         }
@@ -47,78 +47,28 @@ namespace Tuna.Controllers
             return Ok(MockedAverageDistributionByDistrict.GetMockedDistribution(district));
         }
 
+        /// <summary>
+        /// Calculates the theoretical distance a bus could drive based on how much food waste the authenticated user has produced
+        /// The calculation is performed on the collections that occured after the provided DateTime in TimeSpanRequest
+        /// </summary>
+        /// <param name="timespan"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpPost]
         [Route("/api/statistics/foodwaste/busdistance/me")]
         public ActionResult<BusDistanceStatistics> GetBusDistanceForMyFoodWaste([FromBody]TimeSpanRequest timespan)
         {
-            var householdId = Context.Households.Where(x => x.OwnerId == HttpContext.User.GetClaim("sub").Value).FirstOrDefault().HouseholdId;
+            var householdId = HttpContext.User.GetHouseHoldId(Context);
             var numberOfFoodWasteBagsCollected = Context.WasteCollections.Where(x => x.HouseholdId == householdId && x.CollectionDate >= timespan.FromDate).Sum(x => x.FoodWaste);
             var busStatistics = new BusDistanceStatistics()
             {
-                DistanceInMeters = numberOfFoodWasteBagsCollected * 250
+                DistanceInMeters = numberOfFoodWasteBagsCollected * BusDistanceStatistics.MetersDrivenPerFoodWasteBag
             };
 
-            // Set readable distance to either meters or kilometers
-            if (busStatistics.DistanceInMeters < 1000)
-            {
-                busStatistics.ReadableDistance = busStatistics.DistanceInMeters + "m";
-            }
-            else
-            {
-                busStatistics.ReadableDistance = (float)busStatistics.DistanceInMeters / (float)1000 + "km";
-            }
-            SetToFromPlacesBasedOnDistanceTraveled(busStatistics);
             return busStatistics;
-
         }
 
-        private void SetToFromPlacesBasedOnDistanceTraveled(BusDistanceStatistics stats)
-        {
-            if (stats.DistanceInMeters < 250)
-            {
-                stats.GeographicDistanceDescription = "Det er ikke særlig langt";
-            }
-            else if (stats.DistanceInMeters < 300)
-            {
-                stats.GeographicDistanceDescription = "Det tilsvarer litt over en halv runde inne på Bislett stadion";
-            }
-            else if (stats.DistanceInMeters < 500)
-            {
-                stats.GeographicDistanceDescription = "Det er ca like langt som fra Jernbanetorget til Stortinget";
-            }
-            else if (stats.DistanceInMeters < 1000)
-            {
-                stats.GeographicDistanceDescription = "Det er ca like langt som fra Rådhuset til badeplassen Tjuvholmen";
-            }
-            else if (stats.DistanceInMeters < 1500)
-            {
-                stats.GeographicDistanceDescription = "Det er ca like langt som fra Grünerløkka til Tøyen";
-            }
-            else if (stats.DistanceInMeters < 2500)
-            {
-                stats.GeographicDistanceDescription = "Det er ca like langt som fra Grønland til Sofienbergparken";
-            }
-            else
-            {
-                stats.GeographicDistanceDescription = "Det er lengre enn fra Oslo s til Majorstuen";
-            }
-        }
 
-        /// <summary>
-        ///// Will get statistics based on matching family type from database
-        ///// </summary>
-        ///// <param name="p"></param>
-        ///// <returns></returns>
-        //[HttpPost]
-        //[Route("/api/statistics/{district}")]
-        //public ActionResult<TrashDistribution> GetStatisticsForFamilyType([FromBody] HouseholdComparisonParameters p)
-        //{
-        //    var households = Context.Households.Where(x => x.NumberOfAdults == p.NumberOfAdults && x.NumberOfChildren == p.NumberOfChildren).Select(x => x.HouseholdId);
-        //    if (p.District != District.All) {
-        //        return Ok(WasteDistributionHelper.GetAverageDistributionFromWasteCollections(households));
-        //    }
-        //    Context.WasteCollections.Where(x => households.Contains(x.Household.HouseholdId))
-        //}
+
     }
 }

@@ -11,5 +11,9 @@ namespace Tuna.Helpers
         public static Claim GetClaim(this ClaimsPrincipal principal, string claim) {
             return principal.Claims.Where(x => x.Type == "sub").FirstOrDefault();
         }
+
+        public static Guid GetHouseHoldId(this ClaimsPrincipal principal, TunaContext context) {
+            return context.Households.Where(x => x.OwnerId == principal.GetClaim("sub").Value).FirstOrDefault().HouseholdId;
+        }
     }
 }
