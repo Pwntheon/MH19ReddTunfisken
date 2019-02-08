@@ -1,3 +1,16 @@
 .navbar-nav a {
   margin-right: 15px;
 }
+
+svg {
+  height: 50px;
+  color: white;
+  width: 50px;
+}
+
+nav.bg-light {
+  background: #2b5557 !important;
+}
+.mr-auto > a {
+  color: white;
+}
