@@ -2,6 +2,14 @@ import React, { Component } from 'react';
 import { Webcam } from '../webcam/webcam';
 import Api from '../api/cameraApi';
 import Alert from 'react-bootstrap/Alert';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Tab from 'react-bootstrap/Tab';
+import ProgressBar from 'react-bootstrap/ProgressBar';
+
+import Button from 'react-bootstrap/Button';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
+
 import './Camera.css';
 class Camera extends Component {
   constructor() {
@@ -72,7 +80,8 @@ class Camera extends Component {
 
     const data = await response.json();
     this.setState({
-      uploading: false
+      uploading: false,
+      uploadled: true
     });
 
     this.props.onPredictResult(data);
@@ -84,67 +93,86 @@ class Camera extends Component {
     const fullWidth = window.innerWidth / 2;
     if (this.state.capturedImage) {
       const imageUrl = URL.createObjectURL(this.state.capturedImage);
-      imageDisplay = <img src={imageUrl} alt="captured" width="350" />;
+      imageDisplay = (
+        <div className="imageCanvas">
+          <img src={imageUrl} alt="captured" width="350" />
+        </div>
+      );
     } else {
       imageDisplay = <span />;
     }
 
     const buttons = this.state.captured ? (
-      <div>
-        <button className="deleteButton" onClick={this.discardImage}>
-          {' '}
-          Slett bilde{' '}
-        </button>
-        <button className="captureButton" onClick={this.uploadImage}>
-          {' '}
-          Last opp bilde{' '}
-        </button>
-      </div>
+      <Row>
+        <Col sm={12}>
+          <ButtonGroup>
+            <Button
+              className="deleteButton"
+              variant="danger"
+              onClick={this.discardImage}
+            >
+              Slett bilde
+            </Button>
+            <Button className="captureButton" onClick={this.uploadImage}>
+              Last opp bilde
+            </Button>
+          </ButtonGroup>
+        </Col>
+      </Row>
     ) : (
-      <button className="captureButton" onClick={this.captureImage}>
-        {' '}
-        Ta bilde{' '}
-      </button>
+      <Row>
+        <Col sm={12}>
+          <Button className="captureButton" onClick={this.captureImage}>
+            Ta bilde
+          </Button>
+        </Col>
+      </Row>
     );
 
     const uploading = this.state.uploading ? (
-      <div>
-        <p> Laster opp bilde. Vennligst vent </p>
-      </div>
+      <ProgressBar animated now={50} />
     ) : (
       <span />
     );
 
     const video = this.state.captured ? (
-      <video
-        className="hidden"
-        autoPlay={false}
-        playsInline={false}
-        muted
-        id="webcam"
-        width="100%"
-        height={fullWidth}
-      />
+      <Row>
+        <Col sm={12}>
+          <video
+            className="hidden"
+            autoPlay={false}
+            playsInline={false}
+            muted
+            id="webcam"
+            width="100%"
+            height={fullWidth}
+          />
+        </Col>
+      </Row>
     ) : (
-      <video
-        autoPlay
-        playsInline
-        muted
-        id="webcam"
-        width="100%"
-        height={fullWidth}
-      />
+      <Row>
+        <Col sm={12}>
+          <video
+            autoPlay
+            playsInline
+            muted
+            id="webcam"
+            width="100%"
+            height={fullWidth}
+          />
+        </Col>
+      </Row>
     );
 
     return (
       <div>
-        <Alert variant="warning">
+        <Alert variant="warning" dismissible>
           <Alert.Heading>Hei! </Alert.Heading>
           <p>Bildene du tar blir lastet opp til våre servere.</p>
         </Alert>
-        ;{uploading}
+        {uploading}
         {video}
-        <div className="imageCanvas">{imageDisplay}</div>
+        {imageDisplay}
         {buttons}
       </div>
     );

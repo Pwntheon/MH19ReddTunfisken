@@ -9,7 +9,7 @@ namespace Tuna.AuthMiddleware
 {
     public static class FacebookGraphService
     {
-        public static async Task<FacebookUser> CheckToken(string token)
+        public static async Task<FacebookUser> GetUserInfoFromReferenceToken(string token)
         {
             try
             {
