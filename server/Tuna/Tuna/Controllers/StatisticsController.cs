@@ -36,6 +36,28 @@ namespace Tuna.Controllers
         }
 
         /// <summary>
+        /// Gets the average distribution of waste collected for a given household between to-date and today
+        /// </summary>
+        /// <param name="FromDate"></param>
+        /// <param name="ToDate"></param>
+        /// <returns>The average waste distribution</returns>
+        [HttpPost]
+        [Authorize]
+        [Route("/api/statistics/total/me/")]
+        public ActionResult<TrashDistribution> GetTotalCollections([FromBody] TimeSpanRequest timespan)
+        {
+            var householdId = HttpContext.User.GetHouseHoldId(Context);
+            var collections = Context.WasteCollections.Where(x => x.HouseholdId == householdId && x.CollectionDate >= timespan.FromDate);
+            return Ok(new AverageTrashDistribution()
+            {
+                FoodWaste = collections.Sum(x => x.FoodWaste),
+                PlasticWaste = collections.Sum(x => x.PlasticWaste),
+                ResidualWaste = collections.Sum(x => x.ResidualWaste)
+
+            });
+        }
+
+        /// <summary>
         /// Mocks an average waste distribution for each district
         /// </summary>
         /// <param name="district"></param>

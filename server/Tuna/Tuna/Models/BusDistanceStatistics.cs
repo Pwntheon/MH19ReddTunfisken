@@ -16,7 +16,7 @@ namespace Tuna.Models
                 { 250, "Det er ikke særlig langt" },
                 { 300, "Det tilsvarer litt over en halv runde inne på Bislett stadion" },
                 { 500, "Det er ca like langt som fra Jernbanetorget til Stortinget" },
-                { 1000, "Det er ca like langt som fra Rådhuset til badeplassen Tjuvholmen" },
+                { 1000, "Det er ca like langt som fra Rådhuset til badeplassen på Tjuvholmen" },
                 { 1500, "Det er ca like langt som fra Grünerløkka til Tøyen" },
                 { 2500, "Det er ca like langt som fra Grønland til Sofienbergparken" },
                 { 3500, "Det er lengre enn fra Oslo s til Majorstuen" },

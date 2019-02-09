@@ -38,9 +38,11 @@ namespace Tuna
             {
                 c.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info { Title = "Big tuna API", Version = "v1" });
                 c.DescribeAllEnumsAsStrings();
+#if DEBUG
                 c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "TunaDocs.xml"));
+#endif
             });
-            services.AddSingleton(typeof(WasteCollectionService));
+            services.AddTransient(typeof(WasteCollectionService));
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
