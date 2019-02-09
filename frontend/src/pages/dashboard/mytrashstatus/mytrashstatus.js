@@ -64,6 +64,7 @@ class MyTrashStatus extends Component {
     }
     render() {
         const {readableDistance, geographicDistanceDescription} = this.state.co2saved;
+        const {points} = this.props.household;
         return (
             <div className="my-trash-status">
                 <Trashometer temp={this.getMyPercent()} />
@@ -72,6 +73,7 @@ class MyTrashStatus extends Component {
                     <CO2Saved saved={readableDistance} text={geographicDistanceDescription} />
                     <FlinkeBarn />
                 </div>
+                <div className="score">{points} miljøpoeng! {points !== 0 && "Godt jobba."} Neste premie på 1000 poeng.</div>
             </div>
         );
     }
