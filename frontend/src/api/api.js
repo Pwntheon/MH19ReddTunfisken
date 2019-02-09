@@ -39,23 +39,31 @@ class Api {
     return data;
   }
 
-  getMyStatistics(household = null, accessToken = '', fromDateTime = moment().subtract(1, 'month')) {
-    if(!household || !accessToken) {
+  getMyStatistics(
+    household = null,
+    accessToken = '',
+    fromDateTime = moment().subtract(1, 'month')
+  ) {
+    if (!household || !accessToken) {
       console.error('Missing data');
       return;
     }
-    return fetch(`${API_URL}/statistics/me`, {
+    return fetch(`${API_URL}/statistics/total/me`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${accessToken}`
       },
-      body: JSON.stringify({FromDate: fromDateTime})
+      body: JSON.stringify({ FromDate: fromDateTime })
     });
   }
 
-  getDistrictStatistics(household = null, accessToken = '', fromDateTime = moment().subtract(1, 'month')) {
-    if(!household || !accessToken) {
+  getDistrictStatistics(
+    household = null,
+    accessToken = '',
+    fromDateTime = moment().subtract(1, 'month')
+  ) {
+    if (!household || !accessToken) {
       console.error('Missing data');
       return;
     }
@@ -65,12 +73,16 @@ class Api {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${accessToken}`
       },
-      body: JSON.stringify({FromDate: fromDateTime})
+      body: JSON.stringify({ FromDate: fromDateTime })
     });
   }
 
-  getMyBusDistance(household = null, accessToken = '', fromDateTime = moment().subtract(1, 'month')) {
-    if(!household || !accessToken) {
+  getMyBusDistance(
+    household = null,
+    accessToken = '',
+    fromDateTime = moment().subtract(1, 'month')
+  ) {
+    if (!household || !accessToken) {
       console.error('Missing data');
       return;
     }
@@ -80,7 +92,7 @@ class Api {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${accessToken}`
       },
-      body: JSON.stringify({FromDate: fromDateTime})
+      body: JSON.stringify({ FromDate: fromDateTime })
     });
   }
 }
