@@ -6,7 +6,7 @@ class CO2Saved extends Component {
         return (
             <div className="co2-saved">
                 <div><i className="fas fa-bus"></i></div>
-                <div>{saved}</div>
+                <div className="co2-saved-distance">{saved}</div>
                 <div className="co2-saved-description">{text}</div>
             </div>
         );

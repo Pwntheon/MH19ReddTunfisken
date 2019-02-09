@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import PieChart from 'react-simple-pie-chart';
+import './pie.css';
 class Pie extends Component {
     render() {
         let {foodWaste, plasticWaste, residualWaste} = this.props;
         return (
-            <div>
+            <div className="hva-kaster-du">
                 <PieChart
                     slices={[
                         {
@@ -21,6 +22,7 @@ class Pie extends Component {
                         }
                     ]}
                 />
+                <span>Hva kaster du?</span>
             </div>
         );
     }

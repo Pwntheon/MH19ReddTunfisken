@@ -5,7 +5,8 @@ class FlinkeBarn extends Component {
     render() {
         return (
             <div className="flinke-barn">
-                <div>Flinke barn(!)</div>
+                <img src="Stjerne.png" />
+                <div>Små politi</div>
             </div>
         );
     }

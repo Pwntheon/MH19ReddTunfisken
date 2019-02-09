@@ -8,6 +8,10 @@
 }
 
 .co2-saved-description {
-    font-size: 50%;
+    font-size: 25%;
     padding: 10%;
+}
+
+.co2-saved-distance {
+    font-size: 50%;
 }

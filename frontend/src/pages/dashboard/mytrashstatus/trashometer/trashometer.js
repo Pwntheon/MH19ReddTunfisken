@@ -9,7 +9,7 @@ import './trashometer.css';
 
 const doingGood = {
   text: `Du produserer bare halvparten av gjennomsnittelig avfall for din målgruppe!`,
-  buttonText: 'Takk for ditt bidrag',
+  buttonText: 'Utsett henting',
   headerText: 'Bra!',
   color: '#256264'
 };

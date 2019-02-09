@@ -1,6 +1,7 @@
 .mini-stats {
     display:flex;
     justify-content: stretch;
+    margin-bottom: 100px;
 }
 
 .mini-stats > * {
