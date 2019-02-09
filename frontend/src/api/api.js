@@ -68,6 +68,21 @@ class Api {
       body: JSON.stringify({FromDate: fromDateTime})
     });
   }
+
+  getMyBusDistance(household = null, accessToken = '', fromDateTime = moment().subtract(1, 'month')) {
+    if(!household || !accessToken) {
+      console.error('Missing data');
+      return;
+    }
+    return fetch(`${API_URL}/statistics/foodwaste/busdistance/me`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`
+      },
+      body: JSON.stringify({FromDate: fromDateTime})
+    });
+  }
 }
 
 export default new Api();

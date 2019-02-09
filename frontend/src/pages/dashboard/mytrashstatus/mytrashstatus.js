@@ -20,6 +20,11 @@ class MyTrashStatus extends Component {
                 "foodWaste": 0,
                 "plasticWaste": 0,
                 "residualWaste": 0
+            },
+            co2saved: {
+                readableDistance :"0km",
+                distanceInMeters: 2750,
+                geographicDistanceDescription:"Det er lengre enn fra Oslo s til Majorstuen"
             }
         };
 
@@ -40,6 +45,11 @@ class MyTrashStatus extends Component {
     componentDidMount() {
         this.refreshTimer = setInterval(this.updateStats, 1000);
         this.updateStats();
+        setTimeout(() => {
+            api.getMyBusDistance(this.props.household, this.props.authentication.accessToken)
+            .then(r => r.json())
+            .then(d => this.setState({co2saved: {...d}}));
+        }, 5000);
     }
 
     componentWillUnmount() {
@@ -53,12 +63,13 @@ class MyTrashStatus extends Component {
         return myTotal / districtTotal * 100;
     }
     render() {
+        const {readableDistance, geographicDistanceDescription} = this.state.co2saved;
         return (
             <div className="my-trash-status">
                 <Trashometer temp={this.getMyPercent()} />
                 <div className="mini-stats">
                     <Pie {...this.state.myStatistics}></Pie>
-                    <CO2Saved saved={0.22} />
+                    <CO2Saved saved={readableDistance} text={geographicDistanceDescription} />
                     <FlinkeBarn />
                 </div>
             </div>

@@ -4,4 +4,10 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    font-size: 250%;
+}
+
+.co2-saved-description {
+    font-size: 50%;
+    padding: 10%;
 }
